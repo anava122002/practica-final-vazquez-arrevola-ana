@@ -12,19 +12,27 @@ Añade aqui tu descripción y analisis:
 
 **Pregunta 1.1** — ¿De qué fuente proviene el dataset y cuál es la variable objetivo (target)? ¿Por qué tiene sentido hacer regresión sobre ella?
 
-> _Escribe aquí tu respuesta_
+Los datos son parte del National Library of Medicine, concretamente del [**Dataset on anthropometric measurements of the adult population in Slovakia**](https://pmc.ncbi.nlm.nih.gov/articles/PMC11214164/).
+
+Ya tomé este dataset con anterioridad para estudiar estadísticamente la veracidad de las proporciones del hombre de Vitruvio con datos antropométricos reales. En este contexto tiene sentido, tomando la altura como variable objetivo, hacer una regresión lineal usando como variables independientes la envergadura o la longitud de las piernas, torso y cabeza para determinar su proporción en la altura total del cuerpo (los coeficientes *b_i* deberían ser las proporciones dadas por Vitruvio y Da Vinci, siendo *b_0* = 0, si es que interpretamos dichas proporciones como ecuaciones de la recta).
 
 **Pregunta 1.2** — ¿Qué distribución tienen las principales variables numéricas y has encontrado outliers? Indica en qué variables y qué has decidido hacer con ellos.
 
-> _Escribe aquí tu respuesta_
+Las variables numéricas siguen todas una distribución normal excepto la edad pues los datos recogidos son mayoritariamente de jóvenes entre 18 y 25 años (en el link anterior se especifica que los datos se centran en estudiantes, así que era esperable). Los outliers eran principalmente valores irreales, probablemente mal introducidos, de modo que ajustando el coeficiente del método IQR de 1.5 a 2 son fácilmente aislables. 
+
+Un buen ejemplo son los outliers de la variable 'height'. Tomando el método IQR con un coeficiente igual a 1.5 resultaban los outliers 18cm, 1975cm y 205cm. Cambiando el coeficiente a 2 quedaron solo 18cm y 1975cm.
+
+Puesto que eran pocos se consideró sustituirlos por las medias de altura en base a la envergadura (variable *arms_reach*) o eliminarlos. Como se tienen suficientes datos para la regresión y para evitar crear sesgos, finalmente se eliminaron.
 
 **Pregunta 1.3** — ¿Qué tres variables numéricas tienen mayor correlación (en valor absoluto) con la variable objetivo? Indica los coeficientes.
 
-> _Escribe aquí tu respuesta_
+Las variables con mayor correlación con *height* son *shoulder_height*, *arms_reach* y *gender* con coeficientes de correlación iguales a 0.91, 0.84 y -0.73 respectivamente. 
+
+El hecho de que el coeficiente de correlación entre *height* y *shoulder_height* sea tan alto es simple: la altura de los hombros constituye una fracción importante de la altura total (más de 3/4 de la altura total según Vitruvio). Para *height* y *arms_reach* es similar. En relación a la variable *gender*, en el análisis descriptivo se observa que los hombres son de media entre 10 y 15cm más altos que las mujeres, por lo que el género determina notablemente la altura del individuo.
 
 **Pregunta 1.4** — ¿Hay valores nulos en el dataset? ¿Qué porcentaje representan y cómo los has tratado?
 
-> _Escribe aquí tu respuesta_
+La mayoría de columnas del dataset tienen más del 50% de sus datos nulos. Puesto que interpolar tantos datos podría crear sesgos en los resultados y aún eliminando estas filas se siguen conservando casi 5000 elementos en la muestra (suficientes para la regresión), se ha decidido eliminarlos. 
 
 ---
 

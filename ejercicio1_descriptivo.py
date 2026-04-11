@@ -435,7 +435,7 @@ def main():
             'Age', 
             '2.Stature height (cm)',
             '4.Height of shoulders in standing position (cm)', 
-            "10.Arm's reach in standing position (cm)", 
+            "11.Arms spread in standing position (cm)",
             '16.Knee height in sitting position (cm)',
             '20.Leg length when sitting forward (cm)']
 
