@@ -407,7 +407,7 @@ def heatmap(data: pd.DataFrame):
 
     data = data.drop(['age_group'], axis = 1)
 
-    data.columns = ['Gender', 'Age', 'Height', 'Shoulder', 'Arm span', 'Knee', 'Leg length']
+    data.columns = ['Gender', 'Age','Weight' , 'Height', 'Shoulder', 'Arm span', 'Leg length']
 
     plt.figure(figsize = (8, 8))
     sns.heatmap(data.corr(), annot=True, linewidths=0.5, cmap = 'coolwarm')
@@ -433,34 +433,37 @@ def main():
     # Columnas con las que se va a trabajar
     cols = ['Gender', 
             'Age', 
+            '1.Body Weight (kg)',
             '2.Stature height (cm)',
             '4.Height of shoulders in standing position (cm)', 
             "11.Arms spread in standing position (cm)",
-            '16.Knee height in sitting position (cm)',
             '20.Leg length when sitting forward (cm)']
 
     # Nuevos nombres de columnas
-    col_nombres = ['gender', 'age', 'height', 'shoulder_height', 'arms_reach', 'knee_height', 'leg_length']
+    col_nombres = ['gender', 'age', 'weight','height', 'shoulder_height', 'arms_reach', 'leg_length']
 
     # Diccionario con los tipos correctos de cada columna
     tipos_dict = {
         'gender': 'str',
         'age': 'float',
+        'weight': 'float',
         'height': 'float', 
         'shoulder_height': 'float', 
         'arms_reach': 'float', 
-        'knee_height': 'float', 
         'leg_length': 'float'
     }
 
     # Limpieza
     df = limpiar_df(df, cols, tipos_dict, col_nombres)
 
-    # Análisis descriptivo
-    display(est_descriptivos(df))
-
     # Eliminación de outliers
     df = eliminar_outliers(df)
+
+    # Se guardan los datos limpios para ejercicio_2
+    df.to_csv("data\\anthropometric_clean.csv", index = False)
+
+    # Análisis descriptivo
+    display(est_descriptivos(df))
 
     # Histogramas
     plot_density(df)
