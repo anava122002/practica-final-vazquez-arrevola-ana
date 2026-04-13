@@ -67,7 +67,7 @@ def plot_residuos(pred_y: list, e: list):
     plt.ylabel('Errores')
     plt.title('GRÁFICO DE RESIDUOS')
     plt.grid()
-    plt.savefig("output\\ej2_residuos.png")
+    plt.savefig("output/ej2_residuos.png")
     plt.show()
 
 
@@ -88,7 +88,7 @@ def plot_y(pred_y: list, y_test: list):
     plt.ylabel('Predicciones')
     plt.title('COMPARACIÓN Y-hat(Y)')
     plt.grid()
-    plt.savefig("output\\ej2_residuos.png")
+    plt.savefig("output/ej2_residuos.png")
     plt.show()
 
 
@@ -96,7 +96,7 @@ def plot_y(pred_y: list, y_test: list):
 # 3. Archivo .txt
 def escribir_txt(reg_info: dict):
     
-    with open("output\\ej2_metricas_regresion.txt", "w", encoding="utf-8") as archivo:
+    with open("output/ej2_metricas_regresion.txt", "w", encoding="utf-8") as archivo:
         archivo.write("PARÁMETROS Y ERRORES RESULTANTES DE LA REGRESIÓN:\n\n")
         for k, v in reg_info.items():
             archivo.write(f"{k}: {v}\n")
@@ -110,7 +110,7 @@ def escribir_txt(reg_info: dict):
 
 def main():
 
-    df = pd.read_csv("data\\anthropometric_clean.csv")
+    df = pd.read_csv("data/anthropometric_clean.csv")
 
     # Binarizando 'gender'
     df['gender'] = df['gender'].str.strip("'").map({'M': 0, 'F': 1})

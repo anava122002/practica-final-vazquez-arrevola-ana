@@ -81,17 +81,17 @@ def regresion_lineal_multiple(X_train, y_train, X_test):
 
     # TODO: Paso 1 — Añadir columna de unos a X_train para el intercepto β₀
     # Pista: np.ones((n, 1)) y np.hstack([ones, X_train])
-    X_train_b = None  # ← Reemplaza None con tu implementación
+    X_train_b = np.hstack([np.ones((len(X_train), 1)), X_train])
 
     # TODO: Paso 2 — Calcular los coeficientes β con la fórmula OLS
     # β = (XᵀX)⁻¹ Xᵀy
-    coefs = None  # ← Reemplaza None con tu implementación
+    coefs = np.linalg.lstsq(np.dot(X_train_b.T, X_train_b), np.dot(X_train_b.T, y_train))[0]
 
     # TODO: Paso 3 — Añadir columna de unos a X_test de la misma forma
-    X_test_b = None  # ← Reemplaza None con tu implementación
+    X_test_b = np.hstack([np.ones((len(X_test), 1)), X_test])
 
     # TODO: Paso 4 — Calcular predicciones ŷ = X_test_b · β
-    y_pred = None  # ← Reemplaza None con tu implementación
+    y_pred = np.dot(X_test_b, coefs)
 
     return coefs, y_pred
 
@@ -115,8 +115,9 @@ def calcular_mae(y_real, y_pred):
     -------
     float — Valor del MAE
     """
-    # TODO: Implementa el MAE sin usar sklearn
-    pass
+    mae = sum(abs(y_real - y_pred)) / len(y_real)
+    
+    return mae
 
 
 def calcular_rmse(y_real, y_pred):
@@ -134,8 +135,9 @@ def calcular_rmse(y_real, y_pred):
     -------
     float — Valor del RMSE
     """
-    # TODO: Implementa el RMSE sin usar sklearn
-    pass
+    rmse = np.sqrt(sum((y_real - y_pred) ** 2) / len(y_real))
+    
+    return rmse
 
 
 def calcular_r2(y_real, y_pred):
@@ -155,8 +157,12 @@ def calcular_r2(y_real, y_pred):
     -------
     float — Valor del R² (entre -∞ y 1; cuanto más cercano a 1, mejor)
     """
-    # TODO: Implementa el R² sin usar sklearn
-    pass
+    ss_res = sum((y_real - y_pred) ** 2)
+    ss_tot = sum((y_real - np.mean(y_real)) ** 2)
+
+    r2 = 1 - ss_res / ss_tot
+
+    return r2
 
 
 # =============================================================================
@@ -176,13 +182,18 @@ def graficar_real_vs_predicho(y_real, y_pred, ruta_salida="output/ej3_prediccion
     y_pred      : np.ndarray — Predicciones del modelo
     ruta_salida : str        — Ruta donde guardar la imagen
     """
-    # TODO: Implementa la visualización
-    # Pistas:
-    #   - plt.scatter(y_real, y_pred, alpha=0.6)
-    #   - Dibuja la línea de referencia perfecta: y = x
-    #   - Añade etiquetas a los ejes y título
-    #   - Guarda con plt.savefig(ruta_salida, dpi=150, bbox_inches='tight')
-    pass
+
+    plt.figure(figsize = (5, 5))
+    plt.scatter(y_real, y_pred, alpha=0.6)
+    lims = [min(y_real.min(), y_pred.min()), max(y_real.max(), y_pred.max())]
+    plt.plot(lims, lims, 'r--', label='y = x')
+    plt.xlabel('Valores Reales')
+    plt.ylabel('Valores predichos')
+    plt.title('GRÁFICA REAL VS PREDICHO')
+    plt.grid()
+    plt.savefig("output/ej3_predicciones.png", dpi=150, bbox_inches='tight')
+    plt.show()
+
 
 
 # =============================================================================
@@ -259,7 +270,7 @@ if __name__ == "__main__":
     with open("output/ej3_coeficientes.txt", "w") as f:
         f.write("Regresión Lineal Múltiple — Coeficientes ajustados\n")
         f.write("=" * 50 + "\n")
-        nombres = ["Intercepto (β₀)"] + [f"β{i+1} (feature {i+1})" for i in range(n_features)]
+        nombres = ["Intercepto (b0)"] + [f"b{i+1} (feature {i+1})" for i in range(n_features)]
         for nombre, valor in zip(nombres, coefs):
             f.write(f"  {nombre}: {valor:.6f}\n")
         f.write("\nCoeficientes reales de referencia:\n")

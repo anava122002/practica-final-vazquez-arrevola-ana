@@ -176,7 +176,7 @@ def est_descriptivos(data: pd.DataFrame) -> pd.DataFrame:
 
     Usa como base el output de pandas describe y añade varianza, moda, IQR, skewness y curtosis.
 
-    Lo guarda en "output\\ej1_descriptivo.csv".
+    Lo guarda en "output/ej1_descriptivo.csv".
     """
 
     medidas = data.describe()
@@ -187,7 +187,7 @@ def est_descriptivos(data: pd.DataFrame) -> pd.DataFrame:
     medidas.loc['skewness'] = [skew(data[column]) for column in medidas.columns]
     medidas.loc['kurtosis'] = [kurtosis(data[column]) for column in medidas.columns]
 
-    medidas.to_csv('output\\ej1_decriptivo.csv')
+    medidas.to_csv('output/ej1_decriptivo.csv')
 
     return medidas
 
@@ -262,7 +262,7 @@ def plot_density(data: pd.DataFrame, hist_bins = 10):
     """
     Grafica los histogramas de todas las variables numéricas del DataFrame.
 
-    Las guarda en "output\\ej1_histogramas.png".
+    Las guarda en "output/ej1_histogramas.png".
     """
 
     numeric_data = data.select_dtypes(include=['number'])
@@ -280,7 +280,7 @@ def plot_density(data: pd.DataFrame, hist_bins = 10):
     
     plt.suptitle('HISTOGRAMAS DE LAS DISTRIBUCIONES DE LAS VARIABLES NUMÉRICAS')
     plt.tight_layout()
-    plt.savefig("output\\ej1_histogramas.png")
+    plt.savefig("output/ej1_histogramas.png")
     plt.show()
 
     
@@ -316,7 +316,7 @@ def plot_boxplot(data: pd.DataFrame, column: str):
 
     Toma como variables categóricas 'age_group' y 'gender'.
 
-    Guarda el resultado en "output\\ej1_boxplots.png"
+    Guarda el resultado en "output/ej1_boxplots.png"
     """
 
     plt.figure(figsize = (10,5))
@@ -326,7 +326,7 @@ def plot_boxplot(data: pd.DataFrame, column: str):
     plt.grid()
         
     plt.title('BOXPLOT DE LA ALTURA EN BASE AL GRUPO DE EDAD Y EL GÉNERO')
-    plt.savefig("output\\ej1_boxplots.png")
+    plt.savefig("output/ej1_boxplots.png")
     plt.show()
         
 
@@ -366,7 +366,7 @@ def plot_barras(data: pd.DataFrame):
     """
     Grafica el countplot de 'age_group' usando 'gender' como hue.
 
-    Guarda la gráfica en "output\\ej1_categoricas.png".
+    Guarda la gráfica en "output/ej1_categoricas.png".
     """
 
     plt.figure(figsize = (9, 5))
@@ -375,7 +375,7 @@ def plot_barras(data: pd.DataFrame):
     plt.ylabel('count')
     plt.grid()
     plt.title('GRÁFICO PARA VARIABLES CATEGÓRICAS')
-    plt.savefig("output\\ej1_categoricas.png")
+    plt.savefig("output/ej1_categoricas.png")
     plt.show()
 
 
@@ -400,7 +400,7 @@ def heatmap(data: pd.DataFrame):
     * Cambia el nombre de las columnas para mejor legibilidad
     * Grafica el heatmap junto con los coeficientes de correlación
 
-    Guarda el resultado en "output\\ej1_heatmap.png".
+    Guarda el resultado en "output/ej1_heatmap.png".
     """
 
     data['gender'] = data['gender'].map({'M': 0, 'F': 1})
@@ -412,7 +412,7 @@ def heatmap(data: pd.DataFrame):
     plt.figure(figsize = (8, 8))
     sns.heatmap(data.corr(), annot=True, linewidths=0.5, cmap = 'coolwarm')
     plt.title('MATRIZ DE CORRELACIÓN')
-    plt.savefig("output\\ej1_heatmap.png")
+    plt.savefig("output/ej1_heatmap.png")
     plt.show()
 
 
@@ -424,7 +424,7 @@ def heatmap(data: pd.DataFrame):
 
 def main():
 
-    df = pd.read_csv("data\\anthropometric_2003_2023.csv")
+    df = pd.read_csv("data/anthropometric_2003_2023.csv")
 
     # Estructura
     display(resumen_estructural(df))
@@ -460,7 +460,7 @@ def main():
     df = eliminar_outliers(df)
 
     # Se guardan los datos limpios para ejercicio_2
-    df.to_csv("data\\anthropometric_clean.csv", index = False)
+    df.to_csv("data/anthropometric_clean.csv", index = False)
 
     # Análisis descriptivo
     display(est_descriptivos(df))
