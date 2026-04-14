@@ -116,8 +116,8 @@ def main():
     df['gender'] = df['gender'].str.strip("'").map({'M': 0, 'F': 1})
 
     # Definiendo variables independientes y objetivo
-    y = df['height']
-    x = df[['gender', 'weight', 'arms_reach']]
+    y = df['weight']
+    x = df[['gender', 'age', 'height', 'arms_reach']]
 
     # División de datos para training-testing
     X_train, X_test, y_train, y_test = train_test_split(
@@ -134,7 +134,7 @@ def main():
 
     # Cálculo de errores MAE y MSE
     reg_results['MAE'] = mean_absolute_error(y_test, pred_y)
-    reg_results['MSE'] = mean_squared_error(y_test, pred_y)
+    reg_results['RMSE'] = np.sqrt(mean_squared_error(y_test, pred_y))
 
     # Guardando parámetros
     escribir_txt(reg_results)
