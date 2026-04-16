@@ -61,6 +61,13 @@ def predecir_valores(reg: LinearRegression, X: pd.DataFrame, y: pd.Series):
 
 # 2. Gráfica de residuos
 def plot_residuos(pred_y: list, e: list):
+
+    """ 
+    Gráfico de residuos para predicción y residuos dados.
+
+    Guarda el resultado en formato .png
+    """
+    
     plt.figure(figsize = (8, 5))
     plt.scatter(pred_y, e, zorder = 3)
     plt.xlabel('Predicciones')
@@ -74,6 +81,11 @@ def plot_residuos(pred_y: list, e: list):
 # 3. Extra: Q-Q plot y comparación y-hat(y)
 
 def qq_plot(e: list):
+
+    """
+    Q-Q plot para datos unidimensionales (ej.: residuos)
+    """
+    
     plt.figure(figsize=(8,5))
     stats.probplot(e, dist = 'norm', plot = plt)
     plt.title('Q-Q PLOT')
@@ -82,6 +94,11 @@ def qq_plot(e: list):
 
 
 def plot_y(pred_y: list, y_test: list):
+
+    """
+    Scatterplot de comparación de variables y vs hat(y)
+    """
+    
     plt.figure(figsize = (8, 5))
     plt.scatter(y_test, pred_y, zorder = 3)
     plt.xlabel('Valores reales')
@@ -94,6 +111,10 @@ def plot_y(pred_y: list, y_test: list):
 
 # 3. Archivo .txt
 def escribir_txt(reg_info: dict):
+
+    """
+    Guarda los resultados de la regresión (diccionario) en formato .txt
+    """
     
     with open("output/ej2_metricas_regresion.txt", "w", encoding="utf-8") as archivo:
         archivo.write("PARÁMETROS Y ERRORES RESULTANTES DE LA REGRESIÓN:\n\n")
